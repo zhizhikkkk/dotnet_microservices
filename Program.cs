@@ -10,6 +10,8 @@ builder.Services.AddDbContext<AppDbContext>(    opt=>
     opt.UseInMemoryDatabase("DefaultConnection"));
 builder.Services.AddScoped<IPlatformRepo,PlatformRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddControllers();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -21,7 +23,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 PrepDb.PrepPopulation(app);
-
+app.UseEndpoints(endpoints=>{
+    endpoints.MapControllers();
+});
 app.Run();
 
 
